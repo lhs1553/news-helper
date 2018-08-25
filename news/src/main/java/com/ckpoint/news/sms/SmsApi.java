@@ -16,7 +16,7 @@ public class SmsApi {
 
 
     private String getUrl(String url) {
-        String smsUrl = "http://106.10.51.130:8000" + "/api/sms/" + url;
+        String smsUrl = "http://localhost:8090/" + url;
         return smsUrl;
     }
 
