@@ -28,12 +28,10 @@ public class EtodayFinder implements CrawlingInterface {
         String title = tr.getElementsByClass("tit").text();
         String url = tr.select("a").toString();
         String newsId = "";
-        try {
-            url.substring(url.indexOf("idxno=") + 6, url.indexOf("class") - 2);
-        } catch (StringIndexOutOfBoundsException e) {
-            log.info("string index out : " + url);
-            return;
-        }
+        log.info("url : " + url);
+        url = url.substring(url.indexOf("idxno=") + 6);
+        newsId = url.substring(0, url.indexOf("\""));
+        log.info("newsId = " + newsId);
         url = "http://www.etoday.co.kr/news/section/newsview.php?idxno=" + newsId;
 
         this.newsManager.newsPush(newsId, CompanyType.ETODAY, title, null, url);
