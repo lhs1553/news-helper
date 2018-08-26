@@ -25,12 +25,20 @@ public class EtodayFinder implements CrawlingInterface {
 
     private void saveNews(Element tr) {
 
+        if (tr.parent().className().indexOf("e_rightAticle_c") >= 0) {
+            return;
+        }
+
         String title = tr.getElementsByClass("tit").text();
         String url = tr.select("a").toString();
         String newsId = "";
         url = url.substring(url.indexOf("idxno=") + 6);
         newsId = url.substring(0, url.indexOf("\""));
         url = "http://www.etoday.co.kr/news/section/newsview.php?idxno=" + newsId;
+
+        if (newsManager == null) {
+            return;
+        }
 
         this.newsManager.newsPush(newsId, CompanyType.ETODAY, title, null, url);
     }
@@ -42,6 +50,7 @@ public class EtodayFinder implements CrawlingInterface {
         try {
             docu = Jsoup.connect(this.baseUrl).get();
             Elements titles = docu.getElementsByClass("tit_area");
+
             titles.stream().forEach(this::saveNews);
 
         } catch (IOException e) {
