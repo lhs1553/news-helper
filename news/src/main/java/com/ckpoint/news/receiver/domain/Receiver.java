@@ -12,5 +12,6 @@ import javax.persistence.Entity;
 public class Receiver extends BaseEntity {
 
     private String name;
+    private String sendPhone;
     private String phone;
 }

@@ -85,7 +85,6 @@ public class NewsManager {
 
         //push sms
         SmsMsg smsMsg = new SmsMsg();
-        smsMsg.setSendNumber("010-4065-2126");
         smsMsg.setMessage(news.getAuth() + "-" + news.getTitle());
 
         if (!StringUtils.isEmpty(news.getUrl())) {
@@ -115,7 +114,12 @@ public class NewsManager {
     private void broadCastSms(String message) {
         for (Receiver receiver : this.receiverRepository.findAll()) {
             SmsMsg smsMsg = new SmsMsg();
-            smsMsg.setSendNumber("010-4065-2126");
+            if (StringUtils.isEmpty(receiver.getSendPhone())) {
+                receiver.setSendPhone("01040652126");
+                receiver = this.receiverRepository.save(receiver);
+            }
+
+            smsMsg.setSendNumber(receiver.getSendPhone());
             smsMsg.setRecvNumber(receiver.getPhone());
             smsMsg.setMessage(message);
 
