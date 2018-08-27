@@ -83,10 +83,6 @@ public class NewsManager {
 
         news = this.newsRepository.save(news);
 
-        //push sms
-        SmsMsg smsMsg = new SmsMsg();
-        smsMsg.setMessage(news.getAuth() + "-" + news.getTitle());
-
         if (!StringUtils.isEmpty(news.getUrl())) {
             ContentCrawlingInterface contentFinder = Arrays.stream(contentCrawlingInterfaces).filter(ci -> ci.getMyCompanyType().equals(companyType)).findFirst().orElse(null);
 
@@ -106,7 +102,6 @@ public class NewsManager {
     private void notiNews(News news) {
         if (this.isNotiNews(news)) {
             this.broadCastSms(news.getHeadInfo());
-            this.broadCastSms(news.getTitle());
             this.broadCastSms(news.getUrl());
         }
     }
