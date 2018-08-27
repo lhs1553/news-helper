@@ -35,8 +35,8 @@ public class News extends BaseEntity {
     public String getHeadInfo() {
         StringBuilder stringBuilder = new StringBuilder();
         stringBuilder.append(company);
-        stringBuilder.append("\n");
-        stringBuilder.append(title);
+        stringBuilder.append("\n\n");
+        stringBuilder.append(auth);
         return stringBuilder.toString();
 
     }

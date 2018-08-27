@@ -102,6 +102,7 @@ public class NewsManager {
     private void notiNews(News news) {
         if (this.isNotiNews(news)) {
             this.broadCastSms(news.getHeadInfo());
+            this.broadCastSms(news.getTitle());
             this.broadCastSms(news.getUrl());
         }
     }
