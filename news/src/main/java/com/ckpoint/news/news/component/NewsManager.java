@@ -110,6 +110,13 @@ public class NewsManager {
 
     private void broadCastSms(String message) {
         Calendar calendar = Calendar.getInstance();
+
+        int dayOfWeek = calendar.get(Calendar.DAY_OF_WEEK);
+        if (dayOfWeek == Calendar.SUNDAY || dayOfWeek == Calendar.SATURDAY) {
+            log.info("day of week = " + dayOfWeek + " - " + message);
+            return;
+        }
+
         int hour = calendar.get(Calendar.HOUR_OF_DAY);
         if (hour < 8 || hour > 16) {
             log.info("not noti time -  " + message);

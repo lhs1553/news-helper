@@ -11,5 +11,6 @@ public class TimeTest {
 
         Calendar calendar = Calendar.getInstance();
         System.out.println(calendar.get(Calendar.HOUR_OF_DAY));
+        System.out.print("dayofweek = " + calendar.get(Calendar.DAY_OF_WEEK));
     }
 }
