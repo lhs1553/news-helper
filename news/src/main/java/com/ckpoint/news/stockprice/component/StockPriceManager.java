@@ -25,7 +25,7 @@ public class StockPriceManager {
             return news;
         }
 
-        Long price = this.naverSearch.getCurrentPrice(news.getCompany().split(" ")[0]);
+        Long price = this.naverSearch.getCurrentPrice(news);
         news.setStartPrice(price);
         return this.newsRepository.save(news);
     }
@@ -37,7 +37,7 @@ public class StockPriceManager {
         List<News> newsList = this.newsRepository.findByStartPriceIsNotNullAndDayEndPriceIsNullAndCreatedAtAfter(date);
 
         newsList.forEach(news -> {
-            Long price = this.naverSearch.getCurrentPrice(news.getCompany().split(" ")[0]);
+            Long price = this.naverSearch.getCurrentPrice(news);
             news.setDayEndPrice(price);
             this.newsRepository.save(news);
         });
