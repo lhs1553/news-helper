@@ -35,6 +35,9 @@ public class News extends BaseEntity {
     @Column(columnDefinition = "TEXT")
     private String keyword;
 
+    private Long startPrice;
+    private Long dayEndPrice;
+
     public String getHeadInfo() {
         StringBuilder stringBuilder = new StringBuilder();
         stringBuilder.append(company);

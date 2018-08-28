@@ -10,6 +10,7 @@ import com.ckpoint.news.receiver.domain.Receiver;
 import com.ckpoint.news.receiver.repository.ReceiverRepository;
 import com.ckpoint.news.sms.SmsApi;
 import com.ckpoint.news.sms.SmsMsg;
+import com.ckpoint.news.stockprice.component.StockPriceManager;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -39,6 +40,8 @@ public class NewsManager {
 
     private final @NonNull
     SmsApi smsApi;
+    private final @NonNull
+    StockPriceManager stockPriceManager;
 
     private final @NonNull
     ContentCrawlingInterface[] contentCrawlingInterfaces;
@@ -106,6 +109,8 @@ public class NewsManager {
             this.broadCastSms(news.getTitle());
             this.broadCastSms(news.getUrl());
         }
+
+        this.stockPriceManager.initStartPrice(news);
     }
 
     private void broadCastSms(String message) {
@@ -123,7 +128,6 @@ public class NewsManager {
             return;
         }
 
-
         for (Receiver receiver : this.receiverRepository.findAll()) {
             SmsMsg smsMsg = new SmsMsg();
             if (StringUtils.isEmpty(receiver.getSendPhone())) {
@@ -138,6 +142,7 @@ public class NewsManager {
             this.smsExecutor.execute(() -> {
                 this.smsApi.sendSms(smsMsg);
             });
+
         }
     }
 }

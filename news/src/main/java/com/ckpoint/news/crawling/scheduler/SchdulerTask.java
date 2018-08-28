@@ -1,5 +1,6 @@
-package com.ckpoint.news.crawling;
+package com.ckpoint.news.crawling.scheduler;
 
+import com.ckpoint.news.crawling.CrawlingInterface;
 import com.ckpoint.news.news.CompanyType;
 import com.ckpoint.news.news.repository.NewsFilterRepository;
 import org.springframework.beans.factory.annotation.Autowired;
