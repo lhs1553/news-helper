@@ -18,6 +18,7 @@ import org.springframework.util.StringUtils;
 
 import java.io.IOException;
 import java.util.Arrays;
+import java.util.Calendar;
 import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -57,9 +58,9 @@ public class NewsManager {
             }
 
             if (newsFilter.getKeyword() != null) {
-                if (news.getTitle().contains(newsFilter.getKeyword())) {
-                    return true;
-                } else if (news.getContent().contains(newsFilter.getKeyword())) {
+                if (news.getTitle().contains(newsFilter.getKeyword()) || news.getContent().contains(newsFilter.getKeyword())) {
+                    news.setKeyword(newsFilter.getKeyword());
+                    news = this.newsRepository.save(news);
                     return true;
                 }
             }
@@ -108,6 +109,14 @@ public class NewsManager {
     }
 
     private void broadCastSms(String message) {
+        Calendar calendar = Calendar.getInstance();
+        int hour = calendar.get(Calendar.HOUR_OF_DAY);
+        if (hour < 8 || hour > 16) {
+            log.info("not noti time -  " + message);
+            return;
+        }
+
+
         for (Receiver receiver : this.receiverRepository.findAll()) {
             SmsMsg smsMsg = new SmsMsg();
             if (StringUtils.isEmpty(receiver.getSendPhone())) {

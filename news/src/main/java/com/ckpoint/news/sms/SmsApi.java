@@ -21,6 +21,7 @@ public class SmsApi {
     }
 
     public boolean sendSms(SmsMsg smsMsg) {
+
         ResponseEntity<String> res = this.restRequest.commonRestApiCall(this.getUrl("send"), smsMsg, HttpMethod.POST, null, null);
         return this.restRequest.isSuccess(res);
     }

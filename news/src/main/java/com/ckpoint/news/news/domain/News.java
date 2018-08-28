@@ -32,6 +32,9 @@ public class News extends BaseEntity {
     @Enumerated(EnumType.STRING)
     private CompanyType companyType;
 
+    @Column(columnDefinition = "TEXT")
+    private String keyword;
+
     public String getHeadInfo() {
         StringBuilder stringBuilder = new StringBuilder();
         stringBuilder.append(company);
